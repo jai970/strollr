@@ -108,7 +108,7 @@
       color: var(--ink);
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .logo-dot {
       font-size: 10px;
@@ -124,6 +124,92 @@
       transition: width 0.3s cubic-bezier(0.16,1,0.3,1);
     }
     .logo-underline.drawn { width: 80px; }
+
+    /* ─── Logo mark walking figure ─── */
+    .logo-mark {
+      width: 22px;
+      height: 28px;
+      flex-shrink: 0;
+      overflow: visible;
+    }
+    .logo-mark line, .logo-mark circle {
+      stroke: var(--teal);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      fill: none;
+    }
+    .logo-mark circle { fill: var(--teal); stroke: none; }
+    .lm-body { animation: lm-bob 0.7s ease-in-out infinite alternate; }
+    .lm-arm-l { transform-origin: 11px 13px; animation: lm-arm-l 0.7s ease-in-out infinite alternate; }
+    .lm-arm-r { transform-origin: 11px 13px; animation: lm-arm-r 0.7s ease-in-out infinite alternate; }
+    .lm-leg-l { transform-origin: 11px 21px; animation: lm-leg-l 0.7s ease-in-out infinite alternate; }
+    .lm-leg-r { transform-origin: 11px 21px; animation: lm-leg-r 0.7s ease-in-out infinite alternate; }
+    @keyframes lm-bob   { from { transform: translateY(0); } to { transform: translateY(-1px); } }
+    @keyframes lm-arm-l { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+    @keyframes lm-arm-r { from { transform: rotate(18deg); } to { transform: rotate(-18deg); } }
+    @keyframes lm-leg-l { from { transform: rotate(-22deg); } to { transform: rotate(22deg); } }
+    @keyframes lm-leg-r { from { transform: rotate(22deg); } to { transform: rotate(-22deg); } }
+    @media (prefers-reduced-motion: reduce) {
+      .lm-body, .lm-arm-l, .lm-arm-r, .lm-leg-l, .lm-leg-r { animation: none; }
+    }
+
+    /* ─── Hero walkers illustration ─── */
+    .hero-walkers {
+      width: 100%;
+      max-width: 360px;
+      margin: 8px auto 32px;
+      display: flex;
+      justify-content: center;
+    }
+    .hero-walkers svg {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    /* Shared stroke style */
+    .hw line, .hw path, .hw circle { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    /* Walker A (teal, slightly ahead) */
+    .hw-a line, .hw-a path { stroke: var(--teal); stroke-width: 2; }
+    .hw-a circle { fill: var(--teal); stroke: none; }
+    /* Walker B (softer, beside) */
+    .hw-b line, .hw-b path { stroke: var(--ink-soft); stroke-width: 2; }
+    .hw-b circle { fill: var(--ink-soft); stroke: none; }
+
+    /* Body bob */
+    .hw-a-body { animation: hw-bob 0.75s ease-in-out infinite alternate; }
+    .hw-b-body { animation: hw-bob 0.75s ease-in-out infinite alternate 0.375s; }
+    @keyframes hw-bob { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+
+    /* Arms */
+    .hw-a-arm-l { transform-origin: 60px 58px; animation: hw-arm-l 0.75s ease-in-out infinite alternate; }
+    .hw-a-arm-r { transform-origin: 60px 58px; animation: hw-arm-r 0.75s ease-in-out infinite alternate; }
+    .hw-b-arm-l { transform-origin: 160px 58px; animation: hw-arm-l 0.75s ease-in-out infinite alternate 0.375s; }
+    .hw-b-arm-r { transform-origin: 160px 58px; animation: hw-arm-r 0.75s ease-in-out infinite alternate 0.375s; }
+    @keyframes hw-arm-l { from { transform: rotate(-24deg); } to { transform: rotate(20deg); } }
+    @keyframes hw-arm-r { from { transform: rotate(20deg); } to { transform: rotate(-24deg); } }
+
+    /* Legs */
+    .hw-a-leg-l { transform-origin: 60px 80px; animation: hw-leg-l 0.75s ease-in-out infinite alternate; }
+    .hw-a-leg-r { transform-origin: 60px 80px; animation: hw-leg-r 0.75s ease-in-out infinite alternate; }
+    .hw-b-leg-l { transform-origin: 160px 80px; animation: hw-leg-l 0.75s ease-in-out infinite alternate 0.375s; }
+    .hw-b-leg-r { transform-origin: 160px 80px; animation: hw-leg-r 0.75s ease-in-out infinite alternate 0.375s; }
+    @keyframes hw-leg-l { from { transform: rotate(-28deg); } to { transform: rotate(28deg); } }
+    @keyframes hw-leg-r { from { transform: rotate(28deg); } to { transform: rotate(-28deg); } }
+
+    /* Ground shadow */
+    .hw-shadow { animation: hw-shadow-pulse 0.75s ease-in-out infinite alternate; }
+    .hw-shadow-b { animation: hw-shadow-pulse 0.75s ease-in-out infinite alternate 0.375s; }
+    @keyframes hw-shadow-pulse {
+      from { transform: scaleX(1); opacity: 0.18; }
+      to   { transform: scaleX(0.8); opacity: 0.1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hw-a-body, .hw-b-body,
+      .hw-a-arm-l, .hw-a-arm-r, .hw-b-arm-l, .hw-b-arm-r,
+      .hw-a-leg-l, .hw-a-leg-r, .hw-b-leg-l, .hw-b-leg-r,
+      .hw-shadow, .hw-shadow-b { animation: none; }
+    }
 
     /* ─── Coming soon pill ─── */
     .pill {
@@ -571,6 +657,33 @@
   <div class="logo-wrap stagger">
     <div class="logo">
       <span class="logo-dot">•</span>
+
+      <!-- Tiny animated walking figure mark -->
+      <svg class="logo-mark" viewBox="0 0 22 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g class="lm-body">
+          <!-- head -->
+          <circle cx="11" cy="4.5" r="3"/>
+          <!-- torso -->
+          <line x1="11" y1="7.5" x2="11" y2="21"/>
+          <!-- left arm -->
+          <g class="lm-arm-l">
+            <line x1="11" y1="13" x2="5" y2="19"/>
+          </g>
+          <!-- right arm -->
+          <g class="lm-arm-r">
+            <line x1="11" y1="13" x2="17" y2="19"/>
+          </g>
+          <!-- left leg -->
+          <g class="lm-leg-l">
+            <line x1="11" y1="21" x2="6" y2="28"/>
+          </g>
+          <!-- right leg -->
+          <g class="lm-leg-r">
+            <line x1="11" y1="21" x2="16" y2="28"/>
+          </g>
+        </g>
+      </svg>
+
       STROLLR
       <span class="logo-dot">•</span>
     </div>
@@ -593,6 +706,81 @@
     </span>
     with strangers
   </h1>
+
+  <!-- Hero walkers illustration -->
+  <div class="hero-walkers stagger" aria-hidden="true">
+    <svg viewBox="0 0 240 130" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- Ground line -->
+      <line x1="20" y1="116" x2="220" y2="116" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+
+      <!-- Shadow A -->
+      <ellipse class="hw-shadow" cx="60" cy="117" rx="14" ry="3" fill="var(--teal)" opacity="0.15" style="transform-origin:60px 117px"/>
+      <!-- Shadow B -->
+      <ellipse class="hw-shadow-b" cx="160" cy="117" rx="14" ry="3" fill="var(--ink-soft)" opacity="0.15" style="transform-origin:160px 117px"/>
+
+      <!-- Walker A (teal) -->
+      <g class="hw hw-a hw-a-body">
+        <!-- head -->
+        <circle cx="60" cy="38" r="9"/>
+        <!-- torso -->
+        <line x1="60" y1="47" x2="60" y2="80"/>
+        <!-- left arm -->
+        <g class="hw-a-arm-l">
+          <line x1="60" y1="58" x2="44" y2="72"/>
+          <!-- hand curl -->
+          <path d="M44 72 Q42 75 45 76"/>
+        </g>
+        <!-- right arm -->
+        <g class="hw-a-arm-r">
+          <line x1="60" y1="58" x2="76" y2="72"/>
+          <path d="M76 72 Q78 75 75 76"/>
+        </g>
+        <!-- left leg -->
+        <g class="hw-a-leg-l">
+          <line x1="60" y1="80" x2="50" y2="100"/>
+          <line x1="50" y1="100" x2="44" y2="115"/>
+        </g>
+        <!-- right leg -->
+        <g class="hw-a-leg-r">
+          <line x1="60" y1="80" x2="70" y2="100"/>
+          <line x1="70" y1="100" x2="76" y2="115"/>
+        </g>
+      </g>
+
+      <!-- Walker B (grey-ink, offset phase) -->
+      <g class="hw hw-b hw-b-body">
+        <!-- head -->
+        <circle cx="160" cy="38" r="9"/>
+        <!-- torso -->
+        <line x1="160" y1="47" x2="160" y2="80"/>
+        <!-- left arm -->
+        <g class="hw-b-arm-l">
+          <line x1="160" y1="58" x2="144" y2="72"/>
+          <path d="M144 72 Q142 75 145 76"/>
+        </g>
+        <!-- right arm -->
+        <g class="hw-b-arm-r">
+          <line x1="160" y1="58" x2="176" y2="72"/>
+          <path d="M176 72 Q178 75 175 76"/>
+        </g>
+        <!-- left leg -->
+        <g class="hw-b-leg-l">
+          <line x1="160" y1="80" x2="150" y2="100"/>
+          <line x1="150" y1="100" x2="144" y2="115"/>
+        </g>
+        <!-- right leg -->
+        <g class="hw-b-leg-r">
+          <line x1="160" y1="80" x2="170" y2="100"/>
+          <line x1="170" y1="100" x2="176" y2="115"/>
+        </g>
+      </g>
+
+      <!-- Connecting line between them: a gentle arc (they're close but not touching) -->
+      <path d="M75 68 Q110 58 145 68" stroke="var(--teal)" stroke-width="1" stroke-dasharray="4 4" opacity="0.25" fill="none" stroke-linecap="round"/>
+
+    </svg>
+  </div>
 
   <!-- 4. Subheadline -->
   <p class="subheadline stagger">
