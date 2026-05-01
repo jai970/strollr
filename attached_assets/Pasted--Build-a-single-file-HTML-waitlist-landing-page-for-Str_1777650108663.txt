@@ -1,0 +1,88 @@
+ Build a single-file HTML waitlist landing page for Strollr, a mobile app that matches strangers nearby for casual or fitness walks. The page should feel like a hand-crafted editorial moment, not a template — every detail considered, every
+  interaction earned.                                                                                                                                                                                                                            
+                  
+  Aesthetic Direction                                                                                                                                                                                                                            
+                  
+  Organic, editorial, calm-but-alive. Think: a New Yorker article that breathes. Whitespace is a feature, not filler. Motion is restrained but intentional — nothing bounces, everything glides.                                                 
+   
+  Type System                                                                                                                                                                                                                                    
+                  
+  - Playfair Display — display headline, italic for the accent word                                                                                                                                                                              
+  - DM Sans — body, UI, labels (weights: 300 / 400 / 500)
+  - Letter-spacing: generous on small caps (0.25em), tight on the headline (-0.02em)                                                                                                                                                             
+  - Headline: fluid clamp(2.4rem, 6vw, 4.8rem), line-height 1.05                                                                                                                                                                                 
+                                                                                                                                                                                                                                                 
+  Color System (CSS variables)                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                                 
+  --teal: #1D9E75                                                                                                                                                                                                                                
+  --teal-deep: #157a5a
+  --teal-soft: #E8F5EF                                                                                                                                                                                                                           
+  --ink: #1a1a1a
+  --ink-soft: #6b6b6b                                                                                                                                                                                                                            
+  --paper: #fdfcf9   /* warm off-white, not pure #fff */                                                                                                                                                                                         
+  --line: #e8e4dc                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                 
+  Background Texture                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                                 
+  A repeating SVG of meandering topographic/path lines — hand-drawn feel, not geometric. Inline as a data: URI, set at opacity: 0.04, background-size: 600px. It should be felt, not seen.                                                       
+   
+  Page Sections (with the polish)                                                                                                                                                                                                                
+                  
+  1. Logo — STROLLR in DM Sans 500, small caps, letter-spacing 0.4em, with a small dot • on each side. Subtle 1px underline mark beneath, animated to draw in on load (300ms after mount).                                                       
+  2. "Coming soon" pill — teal text on --teal-soft background, 1px teal border, with a tiny pulsing dot (2px, --teal, 2s ease-in-out infinite). Rounded-full.
+  3. Headline — "Turn a walk into an adventure with strangers". The word adventure is Playfair italic in --teal, with a hand-drawn underline SVG sweeping beneath it that animates in on scroll/load (stroke-dashoffset reveal, 1.2s).           
+  4. Subheadline — DM Sans 300, --ink-soft, max-width 42ch, line-height 1.6. Warm copy: "Lace up, step out, meet someone new. Strollr finds people walking your pace, your way — across the park or around the block."                           
+  5. Email form — pill container with 1px --line border, focus state lifts to a soft teal glow (box-shadow: 0 0 0 4px rgba(29,158,117,0.12)). Input is borderless inside the pill. Button is full teal pill on the right, hover darkens to       
+  --teal-deep and translates -1px.                                                                                                                                                                                                               
+    - On invalid submit: red outline (#d4524a), gentle shake animation (3 cycles, 60ms each, ±3px).                                                                                                                                              
+    - On valid submit: form fades out (200ms), success state fades in with a teal checkmark drawn via SVG stroke animation, message: "You're in. We'll be in touch when the first walks roll out."                                               
+  6. Privacy note — "No spam. Unsubscribe anytime." — DM Sans 300, 12px, --ink-soft, centered.                                                                                                                                                   
+  7. Social proof row — 4 circular avatars (40px), overlapping by 12px, each a different warm earth tone (sage, terracotta, ochre, dusty rose) with white initials in DM Sans 500. Followed by "240+ people already on the waitlist" — the number
+   in --ink, the rest in --ink-soft. A live counter that ticks up by 1 every 8–14 seconds (randomized) to feel real.                                                                                                                             
+  8. Vertical divider — 1px × 60px, --line, centered. Just breath.                                                                                                                                                                               
+  9. Feature grid (3 col) — each cell:                                                                                                                                                                                                           
+    - Hand-drawn-style SVG icon, 32px, --teal stroke, 1.5px weight, stroke-linecap: round                                                                                                                                                        
+    - Title in Playfair 500, 18px                                                                                                                                                                                                                
+    - One-line description in DM Sans 300, --ink-soft                                                                                                                                                                                            
+    - Icons: "Match nearby" (pin + radiating arc), "Casual or fitness" (two figures, one strolling, one striding), "Safe & verified" (checkmark inside a soft shield)                                                                            
+    - On hover: icon stroke animates (dashoffset draw), card lifts 2px                                                                                                                                                                           
+  10. Route visualization — two filled teal dots (10px) connected by a horizontal dashed line (8px dashes, 6px gaps, --teal at 60% opacity). Labels in DM Sans 400, 13px, small caps, letter-spacing 0.15em: "YOU" left, "YOUR NEXT WALKING      
+  BUDDY" right. The dashed line animates its dash-offset on load (continuous, very slow — 8s loop) so it feels like footsteps moving along the path. A faint pulsing ring under each dot (2s).                                                   
+                                                                                                                                                                                                                                                 
+  Motion Rules                                                                                                                                                                                                                                   
+                  
+  - All entrances use cubic-bezier(0.16, 1, 0.3, 1) over 600–800ms                                                                                                                                                                               
+  - Sections stagger in on load: 80ms between each
+  - prefers-reduced-motion: disable all transforms, keep opacity fades only                                                                                                                                                                      
+  - Scroll: nothing parallaxes, nothing jumps. Trust the type.                                                                                                                                                                                   
+                                                                                                                                                                                                                                                 
+  Responsive                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                 
+  - Single column under 720px                                                                                                                                                                                                                    
+  - Form: input stacks above button under 480px (button full-width)
+  - Feature grid: 3 col → 1 col under 720px, with a thin horizontal --line between cards                                                                                                                                                         
+  - Headline scales fluidly via clamp()                                                                                                                                                                                                          
+  - Touch targets minimum 44px                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                                 
+  Technical Constraints
+                                                                                                                                                                                                                                                 
+  - Single index.html, zero JS frameworks, zero CSS frameworks                                                                                                                                                                                   
+  - Only external resource: Google Fonts (preconnect + display=swap)
+  - All SVG inline (icons, texture, underline, checkmark)                                                                                                                                                                                        
+  - Vanilla JS for: form validation, success state, counter tick, reduced-motion check                                                                                                                                                           
+  - Email validation: must contain @ and . after the @, trimmed                                                                                                                                                                                  
+  - Lighthouse target: 100/100/100/100                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                 
+  The "Insane" Details (don't skip these)                                                                                                                                                                                                        
+                  
+  - The italic adventure underline is hand-drawn, not a CSS underline                                                                                                                                                                            
+  - The favicon is a single teal dot — that's the brand
+  - Selection color is --teal-soft with --ink text                                                                                                                                                                                               
+  - The cursor over the button gets a custom subtle dot trail (or skip on touch)                                                                                                                                                                 
+  - The success message has a single em-dash–free line; copy is human, not corporate                                                                                                                                                             
+  - A tiny ↓ indicator below the form scrolls the next section into view; fades after first scroll                                                                                                                                               
+  - Page title: "Strollr — walks with strangers, made easy"                                                                                                                                                                                      
+  - Meta description, OG tags, Twitter card, all filled in                                                                                                                                                                                       
+                                                                                                                                                                                                                                                 
+  Build it.                                                                                                                                                                                                                                      
+                                               
